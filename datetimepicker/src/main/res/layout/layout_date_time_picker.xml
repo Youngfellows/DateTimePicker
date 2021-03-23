@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.android.calendar.datetimepicker.widget.WheelView
+            android:id="@+id/wv_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.android.calendar.datetimepicker.widget.WheelView
+            android:id="@+id/wv_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.android.calendar.datetimepicker.widget.WheelView
+            android:id="@+id/wv_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5" />
+
+        <com.android.calendar.datetimepicker.widget.WheelView
+            android:id="@+id/wv_hour"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3" />
+
+        <com.android.calendar.datetimepicker.widget.WheelView
+            android:id="@+id/wv_empty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.android.calendar.datetimepicker.widget.WheelView
+            android:id="@+id/wv_minute"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_center_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text=":"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+</RelativeLayout>
