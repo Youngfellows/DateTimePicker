@@ -80,7 +80,7 @@ public abstract class BaseDialog<V extends View> implements
         if (screenWidthPixels > screenHeightPixels) {
             setSize(screenWidthPixels - screenWidthPixels / 2, WRAP_CONTENT);
         } else {
-            setSize(screenWidthPixels - screenHeightPixels / 50, WRAP_CONTENT);
+            setSize(screenWidthPixels - screenHeightPixels / 60, WRAP_CONTENT);
         }
     }
 

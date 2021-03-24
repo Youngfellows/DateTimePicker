@@ -134,7 +134,7 @@ public class WheelView extends View {
     /**
      * 条目间距倍数
      */
-    private float lineSpacingMultiplier = 1.6F;
+    private float lineSpacingMultiplier = 2.5F;
     public boolean isLoop;
 
     /**
@@ -181,7 +181,7 @@ public class WheelView extends View {
     /**
      * 绘制几个条目，实际上第一项和最后一项Y轴压缩成0%了，所以可见的数目实际为9
      */
-    private int itemsVisible = 7;
+    private int itemsVisible = 5;
 
     /**
      * WheelView 控件高度
@@ -227,7 +227,7 @@ public class WheelView extends View {
     /**
      * 非中间文字则用此控制高度，压扁形成3d错觉
      */
-    private static final float SCALE_CONTENT = 0.8F;
+    private static final float SCALE_CONTENT = 1F;
 
     /**
      * 偏移量
@@ -280,7 +280,7 @@ public class WheelView extends View {
         if (lineSpacingMultiplier < 1.2f) {
             lineSpacingMultiplier = 1.2f;
         } else if (lineSpacingMultiplier > 2.0f) {
-            lineSpacingMultiplier = 2.0f;
+            lineSpacingMultiplier = 2.5f;
         }
     }
 
@@ -346,12 +346,10 @@ public class WheelView extends View {
         //控件宽度，这里支持weight
         //控件宽度，这里支持weight
         measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
-//        int diffWidth = 10;
-//        measuredWidth = maxTextWidth+diffWidth;//加上diffWidth 线的长度就比文本长diffWidth
-//        measuredWidth = measureSize(widthMode,widthSize,measuredWidth);
+
         //计算两条横线 和 选中项画笔的基线Y位置
-        firstLineY = (measuredHeight - itemHeight) / 2.0F;
-        secondLineY = (measuredHeight + itemHeight) / 2.0F;
+        firstLineY = (measuredHeight - itemHeight) / 2.0F + (itemHeight / 11);
+        secondLineY = (measuredHeight + itemHeight) / 2.0F - (itemHeight / 11);
         centerY = secondLineY - (itemHeight - maxTextHeight) / 2.0f - centerContentOffset;
 
         //初始化显示的item的position
@@ -401,6 +399,7 @@ public class WheelView extends View {
 
         }
         itemHeight = lineSpacingMultiplier * maxTextHeight;
+        Log.d(TAG, "measureTextWidthHeight:: itemHeight:" + itemHeight + ",maxTextHeight:" + maxTextHeight + ",lineSpacingMultiplier:" + lineSpacingMultiplier);
     }
 
     public void smoothScroll(ACTION action) {//平滑滚动的实现
@@ -681,8 +680,11 @@ public class WheelView extends View {
 
                 reMeasureTextSize(contentText);
                 //计算开始绘制的位置
-                drawCenterContentStart = measureContentStart(paintCenterText, contentText);
-                drawOutContentStart = measureContentStart(paintOuterText, contentText);
+                //drawCenterContentStart = measureContentStart(paintCenterText, contentText);
+                //drawOutContentStart = measureContentStart(paintOuterText, contentText);
+
+                measuredCenterContentStart(paintCenterText, contentText);
+                measuredOutContentStart(paintOuterText, contentText);
 
                 float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
                 //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
@@ -726,8 +728,10 @@ public class WheelView extends View {
                 } else {
                     // 其他条目
                     canvas.save();
-                    canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
+                    canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight * 3));
                     canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                    Log.d(TAG, "onDraw:: drawOutContentStart:" + drawOutContentStart + ",contentText:" + contentText + ",itemHeight:" + itemHeight + ",radian:" + radian);
+                    //canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
                     canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
                     canvas.restore();
                 }
@@ -792,14 +796,6 @@ public class WheelView extends View {
     }
 
     /**
-     * 根据文本width动态画出文本的左右padding
-     */
-    private int measureContentStart(Paint paint, String text) {
-        int baselineX = (measuredWidth - measureTextWidth(paint, text)) / 2;
-        return baselineX - 4;
-    }
-
-    /**
      * 动态获取文本width
      */
     private int measureTextWidth(Paint paint, String text) {
@@ -818,7 +814,15 @@ public class WheelView extends View {
         return rect;
     }
 
-    private void measuredCenterContentStart(String content) {
+    /**
+     * 根据文本width动态画出文本的左右padding
+     */
+    private int measureContentStart(Paint paint, String text) {
+        int baselineX = (measuredWidth - measureTextWidth(paint, text)) / 2;
+        return baselineX - 4;
+    }
+
+    private void measuredCenterContentStart(Paint paint, String content) {
         Rect rect = new Rect();
         paintCenterText.getTextBounds(content, 0, content.length(), rect);
         switch (mGravity) {
@@ -830,17 +834,20 @@ public class WheelView extends View {
                 }
                 break;
             case Gravity.LEFT:
-                drawCenterContentStart = 0;
+                //drawCenterContentStart = 0;
+                drawCenterContentStart = measuredWidth / 4;
                 break;
             case Gravity.RIGHT://添加偏移量
-                drawCenterContentStart = measuredWidth - rect.width() - (int) centerContentOffset;
+                //drawCenterContentStart = measuredWidth - rect.width() - (int) centerContentOffset;
+                drawCenterContentStart = measuredWidth - measuredWidth / 2;
                 break;
         }
     }
 
-    private void measuredOutContentStart(String content) {
+    private void measuredOutContentStart(Paint paint, String content) {
         Rect rect = new Rect();
         paintOuterText.getTextBounds(content, 0, content.length(), rect);
+
         switch (mGravity) {
             case Gravity.CENTER:
                 if (isOptions || label == null || label.equals("") || !onlyShowCenterLabel) {
@@ -850,10 +857,12 @@ public class WheelView extends View {
                 }
                 break;
             case Gravity.LEFT:
-                drawOutContentStart = 0;
+                //drawOutContentStart = 0;
+                drawOutContentStart = measuredWidth / 4;
                 break;
             case Gravity.RIGHT:
-                drawOutContentStart = measuredWidth - rect.width() - (int) centerContentOffset;
+                //drawOutContentStart = measuredWidth - rect.width() - (int) centerContentOffset;
+                drawOutContentStart = measuredWidth - measuredWidth / 2;
                 break;
         }
     }
@@ -862,6 +871,7 @@ public class WheelView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         this.widthMeasureSpec = widthMeasureSpec;
         this.heightMeasureSpec = heightMeasureSpec;
+        Log.d(TAG, "onMeasure:: ");
         remeasure();
         setMeasuredDimension(measuredWidth, measuredHeight);
     }

@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:paddingTop="21dp"
+    android:paddingBottom="21dp">
 
     <TextView
         android:id="@+id/tv_done"
@@ -11,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@drawable/selector_done_button_bg"
-        android:paddingLeft="33dp"
-        android:paddingTop="8dp"
-        android:paddingRight="33dp"
-        android:paddingBottom="8dp"
+        android:paddingLeft="50dp"
+        android:paddingTop="10dp"
+        android:paddingRight="50dp"
+        android:paddingBottom="10dp"
         android:text="完成"
         android:textColor="@color/white"
         android:textSize="14sp" />

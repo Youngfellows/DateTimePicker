@@ -67,8 +67,8 @@
     <color name="item_divider_color">#EAEBEC</color>
     <color name="item_buynum_color">#555555</color>
     <color name="half_transparent">#c0000000</color>
-    <color name= "login_business_top_bg">#14B9D6</color>
-    <color name= "login_business_bottom_bg">#F2F1EF</color>
+    <color name="login_business_top_bg">#14B9D6</color>
+    <color name="login_business_bottom_bg">#F2F1EF</color>
     <color name="login_btn_normal_bg">#F27935</color>
     <color name="login_btn_pressed_bg">#de5203</color>
     <color name="rili_topview_bg">#EBECEB</color>
@@ -585,6 +585,6 @@
     <color name="chulizhong">#00cc99</color>
     <color name="weichuli">#ff6600</color>
     <color name="yichuli">#42b2ff</color>
-    <color name="yiwancheng">#666666
-    </color>
+    <color name="yiwancheng">#666666</color>
+    <color name="un_selected_textcolor">#C8C8C8</color>
 </resources>

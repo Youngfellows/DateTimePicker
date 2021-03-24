@@ -96,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
         picker.setWeightEnable(true);
         picker.setLineVisible(true);
         picker.setCanLinkage(true);
-        picker.setLineColor(Color.BLACK);
+        picker.setLineColor(Color.WHITE);
+        picker.setSelectedTextColor(Color.WHITE);//前四位值是透明度
+        picker.setUnSelectedTextColor(this.getResources().getColor(R.color.un_selected_textcolor));
         picker.setBackgroundRes(R.drawable.shape_picker_bg);
         picker.setLeftDividerType(LineConfig.DividerType.LEFT_ROUND);
         picker.setRightDividerType(LineConfig.DividerType.RIGHT_ROUND);
@@ -137,6 +139,9 @@ public class MainActivity extends AppCompatActivity {
         picker.setLineVisible(true);
         picker.setOuterLabelEnable(false);
         picker.setCanceledOnTouchOutside(true);
+        picker.setLineColor(Color.WHITE);
+        picker.setSelectedTextColor(Color.WHITE);//前四位值是透明度
+        picker.setUnSelectedTextColor(this.getResources().getColor(R.color.un_selected_textcolor));
         picker.setBackgroundRes(R.drawable.shape_picker_bg);
         picker.setLeftDividerType(LineConfig.DividerType.LEFT_ROUND);
         picker.setRightDividerType(LineConfig.DividerType.RIGHT_ROUND);
